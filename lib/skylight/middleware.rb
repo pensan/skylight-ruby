@@ -80,7 +80,8 @@ module Skylight
         error "Already instrumenting. Make sure the Skylight Rack Middleware hasn't been added more than once."
       end
 
-      if env["REQUEST_METHOD"] == "HEAD"
+                                         # Reduce number of requests tracked
+      if env["REQUEST_METHOD"] == "HEAD" || rand > 0.001
         t { "middleware skipping HEAD" }
         @app.call(env)
       else

@@ -64,7 +64,7 @@ module Skylight
 
   threshold = ENV["SKYLIGHT_THRESHOLD"]
   if threshold.present?
-    puts "[SKYLIGHT] Threshold found; Only #{(threshold * 100).to_i}% of requests are beeing tracked."
+    puts "[SKYLIGHT] Threshold found; Only #{(threshold.to_f * 100).to_i}% of requests are beeing tracked."
   end
 
   class << self

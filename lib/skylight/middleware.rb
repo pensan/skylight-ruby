@@ -80,11 +80,17 @@ module Skylight
         error "Already instrumenting. Make sure the Skylight Rack Middleware hasn't been added more than once."
       end
 
-      threshold = env["SKYLIGHT_THRESHOLD"].to_f || 0.001
-                                         # Reduce number of requests tracked
-      if env["REQUEST_METHOD"] == "HEAD" || rand > threshold
+      threshold = ENV["SKYLIGHT_THRESHOLD"].present? ? ENV["SKYLIGHT_THRESHOLD"].to_f : -1.0
+
+      if env["REQUEST_METHOD"] == "HEAD"
         t { "middleware skipping HEAD" }
         @app.call(env)
+
+        # Skip request if random value is above threshold
+      elsif rand > threshold
+        t { "middleware excluded by ENV['SKYLIGHT_THRESHOLD']" }
+        @app.call(env)
+
       else
         begin
           t { "middleware beginning trace" }

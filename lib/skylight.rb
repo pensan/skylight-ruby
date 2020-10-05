@@ -62,6 +62,11 @@ module Skylight
 
   at_exit { stop! }
 
+  threshold = ENV["SKYLIGHT_THRESHOLD"]
+  if threshold.present?
+    puts "[SKYLIGHT] Threshold found; Only #{(threshold * 100).to_i}% of requests are beeing tracked."
+  end
+
   class << self
     extend Util::InstrumenterMethod
 

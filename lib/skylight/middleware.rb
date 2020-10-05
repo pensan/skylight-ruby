@@ -81,6 +81,10 @@ module Skylight
       end
 
       threshold = env["SKYLIGHT_THRESHOLD"].to_f || 0.001
+      puts env["SKYLIGHT_THRESHOLD"]
+      puts env
+      puts ENV["SKYLIGHT_THRESHOLD"]
+      puts ENV
                                          # Reduce number of requests tracked
       if env["REQUEST_METHOD"] == "HEAD" || rand > threshold
         t { "middleware skipping HEAD" }

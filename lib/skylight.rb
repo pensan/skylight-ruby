@@ -62,6 +62,9 @@ module Skylight
 
   at_exit { stop! }
 
+  threshold = ENV["SKYLIGHT_THRESHOLD"].present? ? ENV["SKYLIGHT_THRESHOLD"].to_f : 0.001
+  puts "Request threshold set to #{(threshold * 100).to_i}%"
+
   class << self
     extend Util::InstrumenterMethod
 
